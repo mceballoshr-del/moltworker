@@ -8,7 +8,8 @@ import SkillsPage from "./pages/SkillsPage";
 import NexusCortexPage from "./pages/NexusCortexPage";
 import DebugPage from "./pages/DebugPage";
 import SettingsPage from "./pages/SettingsPage";
-import NexusCortex from "./components/NexusCortex";
+import ChatHistory from "./components/ChatHistory";
+import { ChatSession, getCurrentSession, createChatSession, addChatSession, updateChatSession } from "./utils/chatStorage";
 import "./App.css";
 
 type Page = "hydra" | "channels" | "agents" | "skills" | "nexus" | "debug" | "settings" | "admin";
@@ -31,6 +32,7 @@ export function App() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [hydraSteps, setHydraSteps] = useState<any[]>([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentSession, setCurrentSession] = useState<ChatSession | null>(null);
 
   useEffect(() => {
     fetch("/api/ncauth/session")
@@ -41,6 +43,15 @@ export function App() {
       })
       .catch(() => setAuth(null))
       .finally(() => setCheckingAuth(false));
+  }, []);
+
+  useEffect(() => {
+    // Load current chat session on mount
+    const session = getCurrentSession();
+    setCurrentSession(session);
+    if (session) {
+      setHydraSteps(session.steps);
+    }
   }, []);
 
   const handleLogin = (role: string) => {
@@ -55,6 +66,40 @@ export function App() {
   const handleLogout = async () => {
     await fetch("/api/ncauth/logout", { method: "POST" });
     setAuth(null);
+  };
+
+  const handleSessionSelect = (session: ChatSession) => {
+    setCurrentSession(session);
+    setHydraSteps(session.steps);
+  };
+
+  const handleNewSession = () => {
+    const newSession = createChatSession("Nueva Conversación", "HYDRA Multi-Model");
+    addChatSession(newSession);
+    setCurrentSession(newSession);
+    setHydraSteps([]);
+  };
+
+  const handleTaskChange = (task: string) => {
+    if (currentSession) {
+      updateChatSession(currentSession.id, { task });
+    }
+  };
+
+  const handleStepUpdate = (step: any) => {
+    const newSteps = [...hydraSteps, step];
+    setHydraSteps(newSteps);
+
+    if (currentSession) {
+      const updatedSession = {
+        ...currentSession,
+        steps: newSteps,
+        lastMessage: step.content,
+        status: step.type === 'error' ? 'error' : 'active'
+      };
+      updateChatSession(currentSession.id, updatedSession);
+      setCurrentSession(updatedSession);
+    }
   };
 
   if (checkingAuth) {
@@ -109,7 +154,7 @@ export function App() {
         </div>
       </aside>
       <main className="main-content">
-        {page === "hydra" && <AutoClawPage steps={hydraSteps} onStep={(step) => setHydraSteps(prev => [...prev, step])} running={isRunning} setRunning={setIsRunning} />}
+        {page === "hydra" && <AutoClawPage steps={hydraSteps} onStep={handleStepUpdate} running={isRunning} setRunning={setIsRunning} initialTask={currentSession?.task || ""} onTaskChange={handleTaskChange} />}
         {page === "channels" && <ChannelsPage />}
         {page === "agents" && <AgentsPage />}
         {page === "skills" && <SkillsPage />}
@@ -118,6 +163,11 @@ export function App() {
         {page === "settings" && <SettingsPage />}
         {page === "admin" && <AdminPage />}
       </main>
+      <ChatHistory
+        currentSession={currentSession}
+        onSessionSelect={handleSessionSelect}
+        onNewSession={handleNewSession}
+      />
     </div>
   );
 }

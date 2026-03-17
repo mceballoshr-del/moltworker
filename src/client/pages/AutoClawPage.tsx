@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./AutoClawPage.css";
 
 interface Step { type: string; model?: string; content: string; ms?: number; }
@@ -8,11 +8,30 @@ interface AutoClawPageProps {
   onStep: (step: Step) => void;
   running: boolean;
   setRunning: (running: boolean) => void;
+  initialTask?: string;
+  onTaskChange?: (task: string) => void;
 }
 
-export default function AutoClawPage({ steps, onStep, running, setRunning }: AutoClawPageProps) {
-  const [task, setTask] = useState("");
+export default function AutoClawPage({
+  steps,
+  onStep,
+  running,
+  setRunning,
+  initialTask = "",
+  onTaskChange
+}: AutoClawPageProps) {
+  const [task, setTask] = useState(initialTask);
   const logRef = useRef<HTMLDivElement>(null);
+
+  // Update task when initialTask changes
+  useEffect(() => {
+    setTask(initialTask);
+  }, [initialTask]);
+
+  const handleTaskChange = (newTask: string) => {
+    setTask(newTask);
+    onTaskChange?.(newTask);
+  };
 
   const run = async () => {
     if (!task.trim() || running) return;
@@ -61,7 +80,7 @@ export default function AutoClawPage({ steps, onStep, running, setRunning }: Aut
       <div className="ac-input">
         <textarea
           value={task}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={(e) => handleTaskChange(e.target.value)}
           placeholder="Describe your task... (e.g. 'Check disk usage and list top 5 largest files')"
           onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), run())}
           disabled={running}
