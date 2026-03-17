@@ -5,18 +5,20 @@ import AutoClawPage from "./pages/AutoClawPage";
 import ChannelsPage from "./pages/ChannelsPage";
 import AgentsPage from "./pages/AgentsPage";
 import SkillsPage from "./pages/SkillsPage";
+import NexusCortexPage from "./pages/NexusCortexPage";
 import DebugPage from "./pages/DebugPage";
 import SettingsPage from "./pages/SettingsPage";
 import NexusCortex from "./components/NexusCortex";
 import "./App.css";
 
-type Page = "hydra" | "channels" | "agents" | "skills" | "debug" | "settings" | "admin";
+type Page = "hydra" | "channels" | "agents" | "skills" | "nexus" | "debug" | "settings" | "admin";
 
 const NAV = [
   { id: "hydra" as Page, label: "HYDRA", icon: "\u{1F409}", section: "Core" },
   { id: "channels" as Page, label: "Channels", icon: "\u{1F4E1}", section: "Control" },
   { id: "agents" as Page, label: "Agents", icon: "\u{1F916}", section: "Agent" },
   { id: "skills" as Page, label: "Skills", icon: "\u26A1", section: "Agent" },
+  { id: "nexus" as Page, label: "NEXUS CORTEX", icon: "\u{1F9E0}", section: "Analysis" },
   { id: "debug" as Page, label: "Debug", icon: "\u{1F41B}", section: "Dev" },
   { id: "settings" as Page, label: "Settings", icon: "\u2699\uFE0F", section: "Dev" },
   { id: "admin" as Page, label: "Admin", icon: "\u{1F6E1}\uFE0F", section: "Dev" },
@@ -107,15 +109,11 @@ export function App() {
         </div>
       </aside>
       <main className="main-content">
-        {page === "hydra" && (
-          <>
-            <NexusCortex steps={hydraSteps} isRunning={isRunning} onSkillSuggested={handleSkillSuggested} />
-            <AutoClawPage steps={hydraSteps} onStep={(step) => setHydraSteps(prev => [...prev, step])} running={isRunning} setRunning={setIsRunning} />
-          </>
-        )}
+        {page === "hydra" && <AutoClawPage steps={hydraSteps} onStep={(step) => setHydraSteps(prev => [...prev, step])} running={isRunning} setRunning={setIsRunning} />}
         {page === "channels" && <ChannelsPage />}
         {page === "agents" && <AgentsPage />}
         {page === "skills" && <SkillsPage />}
+        {page === "nexus" && <NexusCortexPage />}
         {page === "debug" && <DebugPage />}
         {page === "settings" && <SettingsPage />}
         {page === "admin" && <AdminPage />}

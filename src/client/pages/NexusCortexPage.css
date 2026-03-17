@@ -1,0 +1,80 @@
+.nexus-cortex-page {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nexus-cortex-header {
+  margin-bottom: 30px;
+}
+
+.nexus-cortex-header h2 {
+  margin: 0 0 10px 0;
+  color: #00ff88;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.nexus-cortex-desc {
+  color: #888;
+  font-size: 1.1em;
+  margin: 0;
+}
+
+.nexus-cortex-content {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+
+.nexus-cortex-main {
+  flex: 1;
+  background-color: #0a0a1a;
+  border: 1px solid #1a1a2e;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.nexus-info h3 {
+  color: #00ff88;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.nexus-info p {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.status-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.status-dot.active {
+  background-color: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.status-dot.standby {
+  background-color: #ffa500;
+  box-shadow: 0 0 10px #ffa500;
+}
