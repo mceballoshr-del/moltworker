@@ -27,7 +27,8 @@ import type { AppEnv, MoltbotEnv } from './types';
 import { MOLTBOT_PORT } from './config';
 import { createAccessMiddleware } from './auth';
 import { ensureMoltbotGateway, findExistingMoltbotProcess } from './gateway';
-import { publicRoutes, api, adminUi, debug, cdp } from './routes';
+import { publicRoutes, api, adminUi, debug, cdp, polystation, browser } from './routes';
+import { autoclaw } from './routes/autoclaw';
 import { redactSensitiveParams } from './utils/logging';
 import loadingPageHtml from './assets/loading.html';
 import configErrorHtml from './assets/config-error.html';
@@ -147,6 +148,8 @@ app.use('*', async (c, next) => {
 // Mount public routes first (before auth middleware)
 // Includes: /sandbox-health, /logo.png, /logo-small.png, /api/status, /_admin/assets/*
 app.route('/', publicRoutes);
+  // Browser Rendering routes (no auth - used internally by autoclaw)
+  app.route('/api/browser', browser);
 
 // Mount CDP routes (uses shared secret auth via query param, not CF Access)
 app.route('/cdp', cdp);
@@ -209,6 +212,8 @@ app.use('*', async (c, next) => {
 
 // Mount API routes (protected by Cloudflare Access)
 app.route('/api', api);
+app.route('/api/polystation', polystation);
+app.route('/api/autoclaw', autoclaw);
 
 // Mount Admin UI routes (protected by Cloudflare Access)
 app.route('/_admin', adminUi);
@@ -422,6 +427,17 @@ app.all('*', async (c) => {
     if (debugLogs) {
       console.log('[WS] Returning intercepted WebSocket response');
     }
+
+    // Keep the Worker alive for the entire duration of the WebSocket connection.
+    // Without this, Cloudflare terminates the Worker after ~30s, killing the WS
+    // before LLM responses (which can take longer) are delivered to the client.
+    c.executionCtx.waitUntil(
+      new Promise<void>((resolve) => {
+        serverWs.addEventListener('close', () => resolve());
+        containerWs.addEventListener('close', () => resolve());
+      }),
+    );
+
     return new Response(null, {
       status: 101,
       webSocket: clientWs,

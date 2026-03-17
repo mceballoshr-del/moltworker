@@ -1,3 +1,6 @@
+import { ncauth } from "./ncauth";
+import { whatsapp } from "./whatsapp";
+import { browser } from "./browser";
 import { Hono } from 'hono';
 import type { AppEnv } from '../types';
 import { createAccessMiddleware } from '../auth';
@@ -297,5 +300,68 @@ adminApi.post('/gateway/restart', async (c) => {
 
 // Mount admin API routes under /admin
 api.route('/admin', adminApi);
+api.route('/ncauth', ncauth);
+api.route('/whatsapp', whatsapp);
+api.route('/browser', browser);
+
+// POST /api/nexus/divergence - Calculate consensus divergence
+api.post('/nexus/divergence', async (c) => {
+  const { responses } = await c.req.json();
+  if (!Array.isArray(responses)) {
+    return c.json({ error: 'responses must be an array' }, 400);
+  }
+  if (!c.env.AI) {
+    return c.json({ error: 'AI not available' }, 500);
+  }
+  try {
+    const divergenceResponse = await c.env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast' as any, {
+      messages: [
+        {
+          role: 'system',
+          content: 'Rate the semantic divergence between these AI responses on a scale 0-10. Respond ONLY with JSON: {divergence: number, dominant_theme: string, outlier_model: string|null}',
+        },
+        {
+          role: 'user',
+          content: responses.join('\n'),
+        },
+      ],
+    });
+    // Assuming divergenceResponse is already parsed
+    return c.json(divergenceResponse);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return c.json({ error: errorMessage }, 500);
+  }
+});
+
+// POST /api/nexus/suggest - Suggest emergent capability
+api.post('/nexus/suggest', async (c) => {
+  const { synthesis } = await c.req.json();
+  if (typeof synthesis !== 'string') {
+    return c.json({ error: 'synthesis must be a string' }, 400);
+  }
+  if (!c.env.AI) {
+    return c.json({ error: 'AI not available' }, 500);
+  }
+  try {
+    const suggestionResponse = await c.env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast' as any, {
+      messages: [
+        {
+          role: 'system',
+          content: 'Based on this synthesis, suggest an emergent capability or skill that could be added. Respond ONLY with JSON: {skill_name: string, description: string}',
+        },
+        {
+          role: 'user',
+          content: synthesis,
+        },
+      ],
+    });
+    // Assuming suggestionResponse is already parsed
+    return c.json(suggestionResponse);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return c.json({ error: errorMessage }, 500);
+  }
+});
 
 export { api };

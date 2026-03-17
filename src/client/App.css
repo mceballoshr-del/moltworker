@@ -1,46 +1,26 @@
-/* App layout styles */
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+.app{height:100vh;display:flex;background:#0a0a1a;color:#ccc;font-family:system-ui,-apple-system,sans-serif}
+.sidebar{width:220px;min-width:220px;background:#0d0d1f;border-right:1px solid #1a1a2e;display:flex;flex-direction:column;transition:width .2s,min-width .2s}
+.sidebar-collapsed .sidebar{width:56px;min-width:56px}
+.sidebar-header{padding:1rem;border-bottom:1px solid #1a1a2e}
+.sidebar-logo{display:flex;align-items:center;gap:.5rem;cursor:pointer;user-select:none}
+.logo-icon{font-size:1.5rem}
+.logo-text{font-size:1.2rem;font-weight:800;color:#00ff88;letter-spacing:1px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:.5rem 0}
+.nav-section{padding:.5rem 1rem .25rem;font-size:.65rem;text-transform:uppercase;color:#555;letter-spacing:2px;font-weight:600}
+.sidebar-collapsed .nav-section{display:none}
+.nav-item{display:flex;align-items:center;gap:.75rem;width:100%;padding:.5rem 1rem;border:none;background:none;color:#888;cursor:pointer;font-size:.85rem;transition:all .15s;text-align:left;border-left:3px solid transparent}
+.nav-item:hover{background:#1a1a2e;color:#fff}
+.nav-item.active{background:#1a1a2e;color:#00ff88;border-left-color:#00ff88;font-weight:600}
+.nav-icon{font-size:1.1rem;min-width:20px;text-align:center}
+.nav-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-footer{padding:.75rem 1rem;border-top:1px solid #1a1a2e}
+.sidebar-status{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:#666}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-dot.green{background:#00ff88;box-shadow:0 0 6px #00ff8866}
+.status-dot.red{background:#ff4444;box-shadow:0 0 6px #ff444466}
+.main-content{flex:1;overflow:auto;background:#0a0a1a}
+.openclaw-frame{width:100%;height:100%;border:none;background:#0a0a1a}
+.logout-btn{width:100%;margin-top:.5rem;padding:.35rem;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.2);border-radius:6px;color:#ff6666;font-size:.7rem;cursor:pointer;transition:all .2s}
+.logout-btn:hover{background:rgba(25sed -n '78p' src/routes/browser.ts
+5,68,68,.2)}
 
-.app-header {
-  background-color: var(--surface-color);
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-logo {
-  height: 36px;
-  width: auto;
-}
-
-.app-header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.app-main {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .app-header {
-    padding: 1rem;
-  }
-
-  .app-main {
-    padding: 1rem;
-  }
-}

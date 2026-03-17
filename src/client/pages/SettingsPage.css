@@ -1,0 +1,19 @@
+.st-page{padding:2rem;max-width:900px}
+.st-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+.st-top h1{color:#fff;margin:0;font-size:1.6rem}
+.st-sub{color:#666;font-size:.85rem;margin:.25rem 0 0}
+.st-save{padding:.5rem 1.5rem;background:#00ff88;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.85rem;transition:all .2s}
+.st-save:hover{box-shadow:0 0 15px #00ff8855}
+.st-save:disabled{opacity:.5;cursor:not-allowed}
+.st-sections{display:flex;flex-direction:column;gap:1.5rem}
+.st-section{background:#0d0d1f;border:1px solid #1a1a2e;border-radius:10px;padding:1.25rem}
+.st-section h2{color:#fff;margin:0 0 1rem;font-size:1rem;padding-bottom:.5rem;border-bottom:1px solid #1a1a2e}
+.st-fields{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:700px){.st-fields{grid-template-columns:1fr}}
+.st-field{display:flex;flex-direction:column;gap:.3rem}
+.st-field label{font-size:.75rem;color:#666;font-weight:500}
+.st-field input,.st-field select{padding:.5rem .75rem;background:#111;border:1px solid #222;border-radius:6px;color:#fff;font-size:.85rem}
+.st-field input:focus,.st-field select:focus{border-color:#00ff88;outline:none}
+.st-toggle{padding:.4rem .75rem;border-radius:12px;font-size:.75rem;font-weight:600;cursor:pointer;border:none;transition:all .15s;width:fit-content}
+.st-toggle.on{background:#00ff8822;color:#00ff88}
+.st-toggle.off{background:#ff444422;color:#ff4444}

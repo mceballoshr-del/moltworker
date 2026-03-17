@@ -1,0 +1,28 @@
+.ac-page{padding:1.5rem;height:100%;display:flex;flex-direction:column;background:#0a0a1a}
+.ac-header h2{color:#ff3366;margin:0;font-size:1.6rem;font-weight:800;letter-spacing:2px}
+.ac-sub{color:#666;font-size:.8rem;font-weight:400;margin-left:.5rem}
+.ac-desc{color:#555;font-size:.8rem;margin:.3rem 0 0}
+.ac-input{display:flex;gap:.5rem;margin:1rem 0}
+.ac-input textarea{flex:1;padding:.75rem;background:#111;border:1px solid #222;border-radius:8px;color:#fff;font-size:.9rem;resize:none;height:60px;font-family:inherit}
+.ac-input textarea:focus{border-color:#ff3366;outline:none}
+.ac-input button{padding:.75rem 2rem;background:linear-gradient(135deg,#ff3366,#ff6b35);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem;letter-spacing:1px;white-space:nowrap;transition:all .2s}
+.ac-input button:hover:not(:disabled){transform:scale(1.02);box-shadow:0 0 20px #ff336655}
+.ac-input button:disabled{opacity:.5;cursor:not-allowed}
+.ac-running{animation:pulse-btn 1.5s infinite}
+@keyframes pulse-btn{0%,100%{box-shadow:0 0 5px #ff3366}50%{box-shadow:0 0 25px #ff3366}}
+.ac-log{flex:1;overflow-y:auto;background:#080812;border:1px solid #1a1a2e;border-radius:8px;padding:1rem}
+.ac-step{display:flex;gap:.75rem;padding:.5rem 0;border-bottom:1px solid #111}
+.ac-icon{font-size:1.1rem;min-width:24px;text-align:center;padding-top:2px}
+.ac-step-body{flex:1;min-width:0}
+.ac-model{display:inline-block;background:#1a1a2e;color:#00ff88;padding:1px 8px;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.5rem}
+.ac-ms{color:#666;font-size:.7rem}
+.ac-content{margin:.3rem 0 0;color:#ccc;font-size:.8rem;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto;line-height:1.4}
+.ac-dispatch .ac-content{color:#ff3366;font-weight:600}
+.ac-synthesis .ac-content{color:#00ff88;font-size:.9rem;background:#0a1a0a;padding:.75rem;border-radius:6px;border:1px solid #00ff8833}
+.ac-tool .ac-content{color:#ffaa00}
+.ac-result .ac-content{color:#888;background:#0a0a12;padding:.5rem;border-radius:4px}
+.ac-error .ac-content{color:#ff4444}
+.ac-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:.5rem}
+.ac-dragon{font-size:4rem;opacity:.3}
+.ac-empty p{color:#333;margin:0}
+.ac-hint{font-size:.75rem;max-width:400px;text-align:center;line-height:1.5}

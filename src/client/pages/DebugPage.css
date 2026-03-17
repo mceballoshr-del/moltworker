@@ -1,0 +1,25 @@
+.db-page{padding:2rem;height:100%;display:flex;flex-direction:column}
+.db-top h1{color:#fff;margin:0;font-size:1.6rem}
+.db-sub{color:#666;font-size:.85rem;margin:.25rem 0 1rem}
+.db-tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.db-tab{padding:.4rem 1rem;background:#111;border:1px solid #222;border-radius:6px;color:#888;cursor:pointer;font-size:.8rem;transition:all .15s}
+.db-tab.active{background:#1a1a2e;color:#00ff88;border-color:#00ff8833}
+.db-console{flex:1;display:flex;flex-direction:column;background:#080812;border:1px solid #1a1a2e;border-radius:10px;overflow:hidden;min-height:400px}
+.db-log{flex:1;overflow-y:auto;padding:1rem;font-family:'Fira Code',monospace}
+.db-empty{color:#333;font-size:.85rem;padding:2rem;text-align:center}
+.db-entry{display:flex;gap:.5rem;padding:.2rem 0;font-size:.8rem;line-height:1.5}
+.db-ts{color:#333;min-width:60px;font-size:.7rem}
+.db-prefix{min-width:12px;font-weight:700}
+.db-cmd .db-prefix{color:#00ff88}
+.db-out .db-prefix{color:#888}
+.db-err .db-prefix{color:#ff4444}
+.db-info .db-prefix{color:#ffaa00}
+.db-text{margin:0;white-space:pre-wrap;word-break:break-word;color:#ccc}
+.db-cmd .db-text{color:#fff;font-weight:500}
+.db-err .db-text{color:#ff6666}
+.db-input{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-top:1px solid #1a1a2e;background:#0a0a14}
+.db-prompt{color:#00ff88;font-weight:700;font-family:monospace}
+.db-input input{flex:1;background:none;border:none;color:#fff;font-size:.85rem;font-family:'Fira Code',monospace;outline:none}
+.db-info-panel{flex:1;display:flex;flex-direction:column;gap:.75rem}
+.db-info-actions button{padding:.4rem 1rem;background:#1a1a2e;border:1px solid #333;border-radius:6px;color:#aaa;cursor:pointer;font-size:.8rem}
+.db-info-content{flex:1;background:#080812;border:1px solid #1a1a2e;border-radius:10px;padding:1rem;color:#aaa;font-size:.75rem;overflow:auto;line-height:1.5;white-space:pre-wrap;word-break:break-word;min-height:400px;margin:0}
